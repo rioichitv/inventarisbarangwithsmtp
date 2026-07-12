@@ -2,13 +2,9 @@
 
 Sistem manajemen inventaris aset dan perangkat IT berbasis web, dibangun dengan **Laravel 12**, **Bootstrap 5**, dan **MySQL**.
 
-## 🌐 Demo
 
-**URL:** [https://riostore.id](https://riostore.id)
 
----
-
-## 📸 Screenshot
+## 📸 Screenshot Demo
 
 ### Dashboard Admin
 ![Dashboard](https://raw.githubusercontent.com/rioichitv/inventarisbarangwithsmtp/master/demo.png)
