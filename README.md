@@ -10,8 +10,8 @@ Sistem manajemen inventaris aset dan perangkat IT berbasis web, dibangun dengan 
 
 ## 📸 Screenshot
 
-### Dashboard
-![Dashboard](docs/dashboard.png)
+### Dashboard Admin
+![Dashboard](https://raw.githubusercontent.com/rioichitv/inventarisbarangwithsmtp/master/demo.png)
 
 > Tampilan dashboard dengan 8 widget statistik dan carousel informasi
 
