@@ -6,9 +6,14 @@ Sistem manajemen inventaris aset dan perangkat IT berbasis web, dibangun dengan 
 
 **URL:** [https://riostore.id](https://riostore.id)
 
-**Login Admin:**
-- Email: `admin@inventaris.com`
-- Password: `admin123`
+---
+
+## 📸 Screenshot
+
+### Dashboard
+![Dashboard](docs/dashboard.png)
+
+> Tampilan dashboard dengan 8 widget statistik dan carousel informasi
 
 ---
 
@@ -16,45 +21,52 @@ Sistem manajemen inventaris aset dan perangkat IT berbasis web, dibangun dengan 
 
 ### 🔐 Autentikasi
 - Login dengan email & password
-- Verifikasi OTP via email (opsional, bisa diaktifkan di pengaturan)
-- Logout aman dengan pencatatan aktivitas
+- Verifikasi **OTP via email** (opsional, bisa diaktifkan di Web Config)
+- Logout aman dengan pencatatan aktivitas otomatis
 
 ### 📊 Dashboard
-- 8 widget statistik (total barang, jumlah, tersedia, rusak, digunakan, dipinjam, kategori, tanggal)
-- Carousel informasi ringkasan inventaris
+- 8 widget statistik real-time (total barang, jumlah, tersedia, rusak, digunakan, dipinjam, kategori, tanggal)
+- Carousel informasi ringkasan inventaris (3 slide otomatis)
 
-### 📦 Manajemen Barang
-- CRUD lengkap data barang IT
-- Upload foto barang (drag & drop + preview)
-- Upload dokumen pendukung (PDF, Word, Excel)
+### 📦 Manajemen Barang (CRUD)
+- Tambah, edit, detail, dan hapus data barang IT
+- Upload **foto barang** (drag & drop + preview, wajib diisi)
+- Upload **dokumen pendukung** (PDF, Word, Excel, opsional)
 - Filter berdasarkan status dan kondisi
-- Autocomplete kategori dan penanggung jawab
-- Waktu input otomatis (WIB)
-- Validasi form sebelum submit dengan toast notification
+- **Autocomplete** kategori dan penanggung jawab
+- Waktu input **otomatis** (WIB)
+- Validasi form client-side dengan **toast notification**
+- Modal konfirmasi hapus yang cantik
 
-### 📤 Barang Keluar
-- Pencatatan pengeluaran barang
-- Stok otomatis berkurang saat data disimpan
-- Stok otomatis kembali saat data dihapus
-- Upload foto bukti pengeluaran (wajib)
+### 📤 Barang Keluar (CRUD)
+- Pencatatan pengeluaran barang dengan data penerima lengkap
+- Stok **otomatis berkurang** saat data disimpan
+- Stok **otomatis kembali** saat data dihapus
+- Upload **foto bukti pengeluaran** (wajib)
+- Autocomplete bagian/divisi dan petugas
 - Filter berdasarkan tanggal dan pencarian
 
 ### 🏷️ Kategori
-- CRUD kategori barang
+- CRUD kategori barang IT
 - Modal konfirmasi hapus
-- Notifikasi toast sukses/gagal
+- Toast notification sukses/gagal
 
 ### 🛡️ Log Aktivitas Admin
 - Rekam semua aktivitas login dan logout
-- Informasi: username, email, IP address, device, status, level risiko
+- Data: username, email, IP address, device, status, level risiko
+- Level risiko: **Low** (hijau), **Medium** (orange), **Berisiko** (merah)
 - Filter berdasarkan status dan level
-- Data tidak bisa dihapus (read-only)
+- Data **read-only** — tidak bisa dihapus
+
+### ⚙️ Web Config
+- Aktifkan/nonaktifkan OTP login
+- Konfigurasi sistem melalui antarmuka
 
 ### 🌐 Frontend Publik
-- Halaman landing page sistem inventaris
-- Navbar transparan yang berubah saat scroll
+- Landing page sistem inventaris DPR RI
+- Navbar **transparan** yang berubah saat scroll
 - Statistik real-time dari database
-- Carousel informasi
+- 6 kartu fitur unggulan
 - Tombol masuk ke sistem
 
 ---
@@ -76,41 +88,40 @@ Sistem manajemen inventaris aset dan perangkat IT berbasis web, dibangun dengan 
 ## ⚙️ Instalasi Lokal
 
 ```bash
-# Clone repository
+# 1. Clone repository
 git clone https://github.com/rioichitv/inventarisbarangwithsmtp.git
 cd inventarisbarangwithsmtp
 
-# Install dependencies
+# 2. Install dependencies
 composer install
 
-# Copy environment
+# 3. Copy & konfigurasi environment
 cp .env.example .env
-
-# Generate key
 php artisan key:generate
 
-# Konfigurasi database di .env
+# 4. Atur database di .env
 DB_DATABASE=inventaris
 DB_USERNAME=root
 DB_PASSWORD=
 
-# Migrasi dan seeder
-php artisan migrate --seed
+# 5. Migrasi dan seeder
+php artisan migrate --force
+php artisan db:seed --force
 
-# Storage link
+# 6. Storage link
 php artisan storage:link
 
-# Jalankan server
+# 7. Jalankan server
 php artisan serve
 ```
 
-Akses di: **http://localhost:8000**
+Akses: **http://localhost:8000**
+
+Login: `admin@inventaris.com` / `admin123`
 
 ---
 
-## 📧 Konfigurasi Email OTP
-
-Edit `.env` untuk mengaktifkan pengiriman OTP:
+## 📧 Konfigurasi SMTP (OTP Email)
 
 ```env
 MAIL_MAILER=smtp
@@ -124,18 +135,18 @@ MAIL_FROM_NAME="Inventaris IT"
 
 ---
 
-## 🚀 Deploy ke Hosting (Shared Hosting / Hostinger)
+## 🚀 Deploy ke Shared Hosting (Hostinger)
 
 1. Upload semua file ke `public_html`
-2. Buat `.htaccess` di root `public_html`:
+2. Buat `.htaccess` baru di root `public_html`:
    ```apacheconf
    <IfModule mod_rewrite.c>
        RewriteEngine On
        RewriteRule ^(.*)$ public/$1 [L]
    </IfModule>
    ```
-3. Set permission folder `storage` dan `bootstrap/cache` ke **755**
-4. Jalankan via Terminal:
+3. Set permission `storage/` dan `bootstrap/cache/` → **755**
+4. Jalankan via Terminal Hostinger:
    ```bash
    php artisan config:clear
    php artisan migrate --force
@@ -144,23 +155,21 @@ MAIL_FROM_NAME="Inventaris IT"
 
 ---
 
-## 📁 Struktur Folder Utama
+## 📁 Struktur Utama
 
 ```
-├── app/
-│   ├── Http/Controllers/    # AuthController, BarangController, dll
-│   ├── Models/              # Barang, BarangKeluar, ActivityLog, Setting
-│   └── Mail/                # SendOtpMail
-├── database/
-│   ├── migrations/          # Semua migrasi tabel
-│   └── seeders/             # Data awal (admin + contoh barang)
+├── app/Http/Controllers/    → AuthController, BarangController, dll
+├── app/Models/              → Barang, BarangKeluar, ActivityLog, Setting
+├── app/Mail/                → SendOtpMail
+├── database/migrations/     → Semua migrasi tabel
+├── database/seeders/        → Data awal admin + contoh barang
 ├── resources/views/
-│   ├── auth/                # login.blade.php, otp.blade.php
-│   ├── barang/              # CRUD barang
-│   ├── barang-keluar/       # CRUD barang keluar
-│   ├── dashboard.blade.php
-│   ├── frontend/            # Landing page publik
-│   └── layouts/app.blade.php
+│   ├── auth/                → login, otp
+│   ├── barang/              → CRUD barang
+│   ├── barang-keluar/       → CRUD barang keluar
+│   ├── frontend/            → Landing page publik
+│   ├── layouts/app.blade.php
+│   └── dashboard.blade.php
 └── routes/web.php
 ```
 
@@ -168,10 +177,4 @@ MAIL_FROM_NAME="Inventaris IT"
 
 ## 👨‍💻 Developer
 
-**Rio Pratama Putra**
-
----
-
-## 📄 Lisensi
-
-Project ini dibuat untuk keperluan sistem inventaris internal.
+**Rio Pratama Putra** 
